@@ -1,0 +1,371 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Book API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/book/{book}": {
+            "get": {
+                "operationId": "dcf082df4468f990fa4a12cf5bddf14b",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Book"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "08555707c12d4d7f56d3c27bf2467ac3",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/UpdateBookRequest"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Book"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "111a37f5aeb45c228c997ad99aa41c88",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "book",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            ]
+        },
+        "/api/book": {
+            "get": {
+                "operationId": "0e75dde625f5fdef923b42b410113da4",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/title"
+                    },
+                    {
+                        "$ref": "#/components/parameters/author"
+                    },
+                    {
+                        "$ref": "#/components/parameters/genres"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/BookResource"
+                                            }
+                                        },
+                                        "links": {
+                                            "schema": "#/components/schemas/Links"
+                                        },
+                                        "meta": {
+                                            "schema": "#/components/schemas/Meta"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "d186ef540836dc71b8d1342642a1cce5",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/StoreBookRequest"
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/Book"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BookResource": {
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "maxLength": 255,
+                                "example": "Улитка на склоне"
+                            },
+                            "author": {
+                                "type": "string",
+                                "maxLength": 255,
+                                "example": "Аркадий и Борис Стругацкие"
+                            },
+                            "rating": {
+                                "type": "decimal",
+                                "maximum": 5,
+                                "minimum": 1,
+                                "example": 4.5,
+                                "nullable": true
+                            },
+                            "genres": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "example": [
+                                    "Фантастика",
+                                    "Приключение"
+                                ]
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2023-01-13T11:54:41.000000Z",
+                                "nullable": true
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2023-01-13T11:54:41.000000Z",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Book": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "TITLE"
+                    },
+                    "author": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "AUTHOR"
+                    },
+                    "rating": {
+                        "type": "number",
+                        "format": "float",
+                        "maximum": 5,
+                        "minimum": 1,
+                        "example": 4.5,
+                        "nullable": true
+                    },
+                    "genres": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "GENRE1",
+                            "GENRE2"
+                        ]
+                    },
+                    "created_at": {
+                        "type": "integer",
+                        "example": 1671442737
+                    },
+                    "updated_at": {
+                        "type": "integer",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "Book": {
+                "description": "Success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/BookResource"
+                        }
+                    }
+                }
+            },
+            "422": {
+                "description": "Data Validation Failed",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "The title field is required. (and 2 more errors)"
+                                },
+                                "errors": {
+                                    "additionalProperties": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "This field is required."
+                                        }
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Not Found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "No query results for model [App\\Models\\Book] 1"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "page": {
+                "name": "page",
+                "in": "query",
+                "schema": {
+                    "type": "integer",
+                    "example": 1
+                }
+            },
+            "title": {
+                "name": "title",
+                "in": "query",
+                "schema": {
+                    "$ref": "#/components/schemas/Book/properties/title"
+                }
+            },
+            "author": {
+                "name": "author",
+                "in": "query",
+                "schema": {
+                    "$ref": "#/components/schemas/Book/properties/author"
+                }
+            },
+            "genres": {
+                "name": "genres[]",
+                "in": "query",
+                "schema": {
+                    "$ref": "#/components/schemas/Book/properties/genres"
+                }
+            }
+        },
+        "requestBodies": {
+            "SearchBookRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "title": {
+                                    "$ref": "#/components/schemas/Book/properties/title"
+                                },
+                                "author": {
+                                    "$ref": "#/components/schemas/Book/properties/author"
+                                },
+                                "genres": {
+                                    "$ref": "#/components/schemas/Book/properties/genres"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "StoreBookRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "title",
+                                "author",
+                                "genres"
+                            ],
+                            "properties": {
+                                "title": {
+                                    "$ref": "#/components/schemas/Book/properties/title"
+                                },
+                                "author": {
+                                    "$ref": "#/components/schemas/Book/properties/author"
+                                },
+                                "genres": {
+                                    "$ref": "#/components/schemas/Book/properties/genres"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "UpdateBookRequest": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "title": {
+                                    "$ref": "#/components/schemas/Book/properties/title"
+                                },
+                                "author": {
+                                    "$ref": "#/components/schemas/Book/properties/author"
+                                },
+                                "genres": {
+                                    "$ref": "#/components/schemas/Book/properties/genres"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
