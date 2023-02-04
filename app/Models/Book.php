@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use OpenApi\Attributes as OA;
 
 #[OA\Schema(properties: [
@@ -28,4 +29,9 @@ class Book extends Model
     protected $casts = [
         'genres' => 'array',
     ];
+
+    public function estimates(): HasMany
+    {
+        return $this->hasMany(Estimate::class);
+    }
 }

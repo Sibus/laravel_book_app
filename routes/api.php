@@ -19,3 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('book', \App\Http\Controllers\BookController::class);
+
+Route::apiResource('book.estimate', \App\Http\Controllers\EstimateController::class)
+    ->only('store');

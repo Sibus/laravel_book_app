@@ -54,6 +54,40 @@
                 }
             ]
         },
+        "/api/book/{book}/estimate": {
+            "post": {
+                "operationId": "948dfe3e36f8f74f94c6dba9a6463dbf",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/StoreEstimateRequest"
+                },
+                "responses": {
+                    "201": {
+                        "description": "Estimate created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EstimateResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "book",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            ]
+        },
         "/api/book": {
             "get": {
                 "operationId": "0e75dde625f5fdef923b42b410113da4",
@@ -150,6 +184,38 @@
                                     "Фантастика",
                                     "Приключение"
                                 ]
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2023-01-13T11:54:41.000000Z",
+                                "nullable": true
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2023-01-13T11:54:41.000000Z",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "EstimateResource": {
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "book_id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "value": {
+                                "type": "integer",
+                                "example": "5"
                             },
                             "created_at": {
                                 "type": "string",
@@ -339,6 +405,26 @@
                                 },
                                 "genres": {
                                     "$ref": "#/components/schemas/Book/properties/genres"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "StoreEstimateRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "value"
+                            ],
+                            "properties": {
+                                "value": {
+                                    "type": "integer",
+                                    "maximum": 5,
+                                    "minimum": 1
                                 }
                             },
                             "type": "object"
